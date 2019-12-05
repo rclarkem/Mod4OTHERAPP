@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Login from './components/Login'
+import './App.css'
+import TaskList from './components/TaskList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+state = {
+  userID: null,
+  username: "",
+  signIn: false,
 }
 
-export default App;
+
+signedinUser = (user) => {
+  this.setState({
+    userID: user.id,
+    username: user.username,
+    signIn: true,
+  })
+}
+
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Welcome! {this.state.username}</h1>
+        {this.state.signIn ? <TaskList userID={this.state.userID} /> : <Login signedinUser={this.signedinUser}/>}
+      </div>
+    )
+  }
+}
